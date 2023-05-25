@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <table class="table mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Picture</th>
+        <th scope="col">Match</th>
+        <th scope="col">Stock ID</th>
+        <th scope="col">Part Number</th>
+        <th scope="col">Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for recent_matche in recent_matches %}
+      <tr>
+        <td>
+        <a href="{{ recent_matche.image_url }}" >{{ recent_matche.picture_number }}</a>
+        </td>
+        <td>{{ recent_matche.no_match_available }}</td>
+        <td>{{ recent_matche.picture_id.stock_line.stock_id }}</td>
+        <td>{{ recent_matche.picture_id.stock_line.part_number  }}</td>
+        <td>
+          <form action="{% url 'recent-matches' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="worker_id" value="{{ recent_matche.id }}">
+            <input type="hidden" name="stock_list_id" value="{{ recent_matche.picture_id.stock_line.id }}">
+            <button type="submit" class="btn btn-outline-primary btn-sm py-0">Remove</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <form action="{% url 'import-worker-batch-csv' %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+    <label for="">Batch Name </label>
+	<input required type="text" name="batch_name">
+	<input required type="file" name="csv_file" >
+	<button class="btn btn-primary" type="submit"> Submit</button>
+</form>
+{% endblock %}

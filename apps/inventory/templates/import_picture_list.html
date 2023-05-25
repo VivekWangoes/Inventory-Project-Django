@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<form action="{% url 'import-picture-file' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="exampleFormControlFile1">Picture file input</label>
+      <input type="file" name="excel_file"class="form-control-file" id="exampleFormControlFile1">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+{% endblock %}

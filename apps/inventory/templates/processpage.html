@@ -1,0 +1,364 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if worker_data %}
+<section>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-4" style="">
+				<h5 style="text-align: center;">IMG: {{ worker_data.picture_number}}</h5>
+				<a target="_blank" rel="noopener noreferrer" href="{{ worker_data.image_url }}" >
+					<img src="{{ worker_data.image_url }}" width="100%">
+				</a>
+				<table class="table" style="text-align: center;">
+					<tbody>
+						<tr>
+							<td>
+								<form action="{% url 'no-match-available' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" value="{{ worker_data.id }}" name="worker_id">
+									<button type="submit" class="btn btn-outline-danger">No Match Available</button>
+								</form>
+							</td>
+							<td>
+								<form action="{% url 'move-to-end-of-queue' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" value="{{ worker_data.id }}" name="worker_id">
+									<button type="submit" class="btn btn-outline-danger">Move to end of queue
+									</button>
+								</form>
+							</td>				
+						</tr>
+					</tbody>
+				</table>
+				<h5 style="text-align: center;">Supplied Data</h5>
+				<table class="table" style="text-align: center;">
+					<thead>
+						<tr>
+							<th scope="col">Part #</th>
+							<th scope="col">Serial #</th>
+							<th scope="col">AC/Eng SN</th>
+							<th scope="col">Cons</th>						
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{{ worker_data.part_number }}</td>
+							<td>{{ worker_data.serial_number }}</td>
+							<td>{{ worker_data.ac_eng_serial }}</td>
+							<td>{{ worker_data.consignment_code }}</td>						
+						</tr>
+						<tr>
+							<td>
+								<form action="{% url 'change-button' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" name="worker_id" value="{{ worker_data.id }}">
+									<input type="hidden" name="button_type" value="part_number_correct">
+									{% if worker_data.part_number_correct %}
+									<button type="submit" class="btn btn-outline-danger btn-sm py-0">Wrong PN</button>
+									{% else %}
+									<button type="submit" class="btn btn-danger btn-sm py-0">Wrong PN</button>
+									{% endif %}
+								</form>
+							</td>
+							<td>	
+								<form action="{% url 'change-button' %}" method="post">
+								{% csrf_token %}
+								<input type="hidden" name="worker_id" value="{{ worker_data.id }}">
+								<input type="hidden" name="button_type" value="serial_number_correct">
+								{% if worker_data.serial_number_correct %}
+								<button type="submit" class="btn btn-outline-danger btn-sm py-0">Wrong SN</button>
+								{% else %}
+								<button type="submit" class="btn btn-danger btn-sm py-0">Wrong SN</button>
+								{% endif %}
+								</form>
+							</td>
+							<td>
+								<form action="{% url 'change-button' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" name="worker_id" value="{{ worker_data.id }}">
+									<input type="hidden" name="button_type" value="ac_eng_serial_correct">
+									{% if worker_data.ac_eng_serial_correct %}
+									<button type="submit" class="btn btn-outline-danger btn-sm py-0">Wrong ESN</button>
+									{% else %}
+									<button type="submit" class="btn btn-danger btn-sm py-0">Wrong ESN</button>
+									{% endif %}
+								</form>
+							</td>
+							<td>
+								<form action="{% url 'change-button' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" name="worker_id" value="{{ worker_data.id }}">
+									<input type="hidden" name="button_type" value="consignment_code_correct">
+									{% if worker_data.consignment_code_correct %}
+									<button type="submit" class="btn btn-outline-danger btn-sm py-0">Wrong Con</button>
+									{% else %}
+									<button type="submit" class="btn btn-danger btn-sm py-0">Wrong Con</button>
+									{% endif %}
+								</form>
+								
+							</td>					
+						</tr>
+						<tr>
+							<td>
+								<form action="{% url 'change-button' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" name="worker_id" value="{{ worker_data.id }}">
+									<input type="hidden" name="button_type" value="part_number_entered">
+									{% if worker_data.part_number_entered %}
+									<button type="submit" class="btn btn-outline-danger btn-sm py-0">Missing PN</button>
+									{% else %}
+									<button type="submit" class="btn btn-danger btn-sm py-0">Missing PN</button>
+									{% endif %}
+								</form>
+							</td>
+							<td>
+								<form action="{% url 'change-button' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" name="worker_id" value="{{ worker_data.id }}">
+									<input type="hidden" name="button_type" value="serial_number_entered">
+									{% if worker_data.serial_number_entered %}
+									<button type="submit" class="btn btn-outline-danger btn-sm py-0">Missing SN</button>
+									{% else %}
+									<button type="submit" class="btn btn-danger btn-sm py-0">Missing SN</button>
+									{% endif %}
+								</form>
+							</td>
+							<td>
+								<form action="{% url 'change-button' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" name="worker_id" value="{{ worker_data.id }}">
+									<input type="hidden" name="button_type" value="ac_eng_serial_entered">
+									{% if worker_data.ac_eng_serial_entered %}
+									<button type="submit" class="btn btn-outline-danger btn-sm py-0">Missing ESN</button>
+									{% else %}
+									<button type="submit" class="btn btn-danger btn-sm py-0">Missing ESN</button>
+									{% endif %}
+								</form>
+							</td>
+							<td>
+								<form action="{% url 'change-button' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" name="worker_id" value="{{ worker_data.id }}">
+									<input type="hidden" name="button_type" value="consignment_code_entered">
+									{% if worker_data.consignment_code_entered %}
+									<button type="submit" class="btn btn-outline-danger btn-sm py-0">Missing Con</button>
+									{% else %}
+									<button type="submit" class="btn btn-danger btn-sm py-0">Missing Con</button>
+									{% endif %}
+								</form>
+							</td>					
+						</tr>
+					</tbody>			
+				</table>
+				
+				<h5 style="text-align: center;">Bonus</h5>
+				<table class="table" style="text-align: center;">
+					<tbody>
+						<tr>
+							<td>
+								<form action="{% url 'difficult-to-read' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" name="worker_id" value="{{ worker_data.id }}">
+									{% if worker_data.bonus_difficult_to_read %}
+									<button type="submit" class="btn btn-success">Difficult To Read</button>
+									{% else %}
+									<button type="submit" class="btn btn-outline-success">Difficult To Read</button>
+									{% endif %}
+								</form>
+							</td>
+							<td>
+								<form action="{% url 'inferred-info' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" name="worker_id" value="{{ worker_data.id }}">
+									{% if worker_data.bonus_inferred_info %}
+									<button type="submit" class="btn btn-success">Inferred Info</button>
+									{% else %}
+									<button type="submit" class="btn btn-outline-success">Inferred Info</button>
+									{% endif %}
+								</form>
+								
+							</td>				
+						</tr>
+					</tbody>			
+				</table>
+				<p>Comments: {{ worker_data.comments }}</p>
+			</div>
+			<div class="col-8 br-primary">
+				<br>
+				<div class="container-fluid">
+					<div style="text-align: center;">
+						<form method="post", action="{% url 'home'  %}">
+							{% csrf_token %}
+							<input id="search" type="text" name="search" autofocus placeholder="Search...">
+							<input type="hidden" value="{{ worker_data.id }}" name="worker_id">
+							<input id="type" type="hidden" name="type" value="">
+							<button id="part" type="submit" class="btn btn-primary">Part #</button>
+							<button id="part_contains" type="submit" class="btn btn-primary">Part # Contains</button>
+							<button id="stock_serial" type="submit" class="btn btn-primary">Serial #</button>
+						</form>						
+					</div>
+				</div>
+				<br>
+				<div class="{% if not stock_list %} d-none {% endif %}" id="search-result" >
+					<h5 style="text-align: center;" >Search Results</h5>
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Stock ID</th>
+								<th scope="col">Part #</th>
+								<th scope="col">Serial #</th>
+								<th scope="col">Cons</th>
+								<th scope="col">AC/Eng SN</th>
+								<th scope="col">Qty</th>
+								<th scope="col">Cd</th>
+								<th scope="col">Description</th>							
+							</tr>
+						</thead>
+						<tbody>
+							{% for stock in stock_list %}
+							<tr>
+								<td>
+									<form action="{% url 'match-stock-id' %}" method="post">
+										{% csrf_token %}
+										<input type="hidden" name="worker_id" value="{{ worker_data.id }}">
+										<input type="hidden" name="stock_list_id" value="{{ stock.id }}">
+										{% if stock.stock_line.all.count > 0 %}
+										<button type="submit" class="btn btn-danger btn-sm py-0">{{ stock.stock_id }}</button>
+										{% else %}
+										<button type="submit" class="btn btn-outline-primary btn-sm py-0">{{ stock.stock_id }}</button>
+										{% endif %}
+									</form>
+								</td>
+								<td>{{ stock.part_number }}</td>
+								<td>{{ stock.serial_number }}</td>
+								<td>{{ stock.consignment_code }}</td>
+								<td>{{ stock.ac_eng_serial }}</td>
+								<td>{{ stock.quantity }}</td>
+								<td>{{ stock.condition_code }}</td>
+								<td>{{ stock.description }}</td>							
+							</tr>
+							{% endfor %}
+						</tbody>			
+					</table>
+					<hr>					
+				</div>
+				<h5 style="text-align: center;">Auto Matches</h5>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Stock ID</th>
+							<th scope="col">Part #</th>
+							<th scope="col">Serial #</th>
+							<th scope="col">Cons</th>
+							<th scope="col">AC/Eng SN</th>
+							<th scope="col">Qty</th>
+							<th scope="col">Cd</th>
+							<th scope="col">Description</th>							
+						</tr>
+					</thead>
+					<tbody>
+						{% for auto_match in auto_match_data_list %}
+						<tr>
+							<td>
+								<form action="{% url 'match-stock-id' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" name="worker_id" value="{{ worker_data.id }}">
+									<input type="hidden" name="stock_list_id" value="{{ auto_match.id }}">
+									{% if auto_match.stock_line.all.count > 0 %}
+									<button type="submit" class="btn btn-danger btn-sm py-0">{{ auto_match.stock_id }}</button>
+									{% else %}
+									<button type="submit" class="btn btn-outline-primary btn-sm py-0">{{ auto_match.stock_id }}</button>
+									{% endif %}
+								</form>
+							</td>
+							<td>{{ auto_match.part_number }}</td>
+							<td>{{ auto_match.serial_number }}</td>
+							<td>{{ auto_match.consignment_code }}</td>
+							<td>{{ auto_match.ac_eng_serial }}</td>
+							<td>{{ auto_match.quantity }}</td>
+							<td>{{ auto_match.condition_code }}</td>
+							<td>{{ auto_match.description }}</td>					
+						</tr>
+						{% endfor %}	
+					</tbody>			
+				</table>
+			<ul class="pagination justify-content-center">
+				{% if auto_match_data_list.has_previous %}
+					<li class="page-item">
+					<a class="page-link" href="?page={{ auto_match_data_list.previous_page_number }}">Previous</a>
+				  </li>
+				{% else %}
+					<li class="page-item disabled">
+					<a class="page-link" href="#" tabindex="-1" aria-disabled="True">Previous</a>
+				  </li>
+				{% endif %}
+		
+				{% if auto_match_data_list.number|add:'-4' > 1 %}
+					<li class="page-item"><a class="page-link" href="?page={{ auto_match_data_list.number|add:'-5' }}">&hellip;</a></li>
+				{% endif %}
+		
+				{% for i in auto_match_data_list.paginator.page_range %}
+					{% if auto_match_data_list.number == i %}
+						<li class="page-item active" aria-current="page">
+					  <span class="page-link">
+						{{ i }}
+						<span class="sr-only"></span>
+					  </span>
+					</li>
+					{% elif i > auto_match_data_list.number|add:'-5' and i < auto_match_data_list.number|add:'5' %}
+						 <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+					{% endif %}
+				{% endfor %}
+		
+				{% if auto_match_data_list.paginator.num_pages > auto_match_data_list.number|add:'4' %}
+				   <li class="page-item"><a class="page-link" href="?page={{ auto_match_data_list.number|add:'5' }}">&hellip;</a></li>
+				{% endif %}
+		
+				{% if auto_match_data_list.has_next %}
+					<li class="page-item">
+					<a class="page-link" href="?page={{ auto_match_data_list.next_page_number }}">Next</a>
+				  </li>
+				{% else %}
+					<li class="page-item disabled">
+					<a class="page-link" href="#" tabindex="-1" aria-disabled="True">Next</a>
+				  </li>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</section>
+{% else %}
+<section>
+	<div class="center" >
+		<h2>
+			No Data Found
+		</h2>
+		<hr>
+
+		<h2>
+
+			Please add Data first
+		</h2>
+	</div>
+</section>
+{% endif %}
+
+<script>
+	$(document).ready(function(){
+		// $("#search-result").hide();
+		$("#part").click(function(){
+			$("#type").val("part");
+			// $("#search-result").show();
+		});
+		$("#part_contains").click(function(event){	
+			$("#type").val("part_contains")
+			// $("#search-result").show();
+		});
+		$("#stock_serial").click(function(event){
+			$("#type").val("stock_serial")
+			// $("#search-result").show();
+		});
+	});
+</script>
+{% endblock content %}

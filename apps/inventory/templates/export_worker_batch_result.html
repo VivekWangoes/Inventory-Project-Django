@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <h3> Export Worker Results</h3>
+    <form action="" method="post" class="col-3 mt-3">
+        {% csrf_token %}
+        <select required name="watch_obj" class="form-select" aria-label="Default select example">
+            {% for batch in worker_batch_list %}
+            <option value="{{ batch.id }}">{{ batch.batch_name }}</option>
+            {% endfor %}
+          </select>
+        <button  type="submit" class="btn mt-3 btn-primary">submit</button>
+    </form>
+{% endblock %}

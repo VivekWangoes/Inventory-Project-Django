@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbarcolor justify-content-between">
+  <a class="navbar-brand" href="#">Inventory</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home' %}">Home</a>
+      </li>
+      <div class="dropdown">
+        <a class="nav-link dropdown-toggle" role="button" id="picturDropDown" data-bs-toggle="dropdown" aria-expanded="false">
+        Picture
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="picturDropDown">
+        <li><a class="dropdown-item" href="{% url 'import-picture-file' %}">Import Picture List</a></li>
+        <li><a class="dropdown-item" href="{% url 'export-picture-result' %}">Export Picture Results</a></li>
+        </ul>
+      </div>
+      <div class="dropdown">
+        <a class="nav-link dropdown-toggle" role="button" id="DropDownbatch" data-bs-toggle="dropdown" aria-expanded="false">
+        Batch
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="DropDownbatch">
+        <li><a class="dropdown-item" href="{% url 'import-worker-batch-csv' %}">Import Worker Batch</a></li>
+        <li><a class="dropdown-item" href="{% url 'batch-status' %}">Batch Status</a></li>
+        <li><a class="dropdown-item" href="{% url 'export-batch-result' %}">Export Batch Results</a></li>
+        </ul>
+      </div>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'recent-matches' %}">Recent Matches</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'import-stock-list' %}">Import Stock List</a>
+      </li>
+      <li>
+        <a class="nav-link " href="{% url 'logout' %}">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
